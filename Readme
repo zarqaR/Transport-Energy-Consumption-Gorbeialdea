@@ -1,0 +1,53 @@
+Transport Energy Consumption — Gorbeialdea
+
+Scripts and data supporting the MSc thesis "Analysis of the energy consumption 
+of the transport in Gorbeialdea" (Erasmus Mundus Joint Master's in Smart Cities 
+and Communities, SMACCs — UPV/EHU, University of Vaasa, University of Mons, 2026).
+
+Contents
+
+Scripts
+- `build_link_table (1).py` constructs the road network link table from the 
+  node table (prepared in QGIS from IGN IGR-RT road shapefiles) and the road 
+  shapefile geometry, using geopandas and shapely.
+- `od_matrix (1).py` — origin-destination matrix estimation using Tikhonov-regularised 
+  Generalized Least Squares (TRLS), solved with scipy's bounded-variable least 
+  squares (`lsq_linear`). The primary method retained in the thesis.
+- `od_matrix (2).py` — origin-destination matrix estimation using the Khan and 
+  Anderson (2014) constrained estimator. This method was tested and rejected in 
+  the thesis due to fundamental divergence on the underdetermined system in this 
+  study; it is included here for transparency and reproducibility of that finding, 
+  not as a retained method.
+- `od_matrix_ME2.py` — origin-destination matrix estimation using Entropy 
+  Maximisation (ME2), the second method retained in the thesis.
+
+Energy consumption scenario calculations (2024 / 2030 / 2050) were performed 
+directly in Excel rather than Python; see the two scenario workbooks below.
+
+Data
+- `Link Table Final Updated.csv`, `Node Table Final Updated.csv` — road network 
+  topology (links and nodes) ; see the thesis Section 3.1 for the full GIS workflow.
+- `OD_matrix_results.xlsx` — estimated OD matrix, Tikhonov-regularised GLS (TRLS)
+- `OD_matrix_results_ME2.xlsx` — estimated OD matrix, Entropy Maximisation (ME2)
+- `link_flow_comparison.csv` — observed vs. estimated link flows, TRLS (supports Table 42 of the thesis)
+- `link_flow_comparison_ME2.csv` — observed vs. estimated link flows, ME2 (supports Table 42 of the thesis)
+- `regularisation_sensitivity.csv` — sensitivity sweep over the Tikhonov regularisation parameter (supports Table 41 of the thesis)
+- `Gorbeialdea_Energy_Consumption_Scenarios_TRLS_Method.xlsx` — energy consumption 
+  scenario results (2024 / 2030 / 2050), computed in Excel from the TRLS OD matrix
+- `Gorbeialdea_Energy_Consumption_Scenarios_ME2_Method.xlsx` — energy consumption 
+  scenario results (2024 / 2030 / 2050), computed in Excel from the ME² OD matrix
+
+Requirements
+Python scripts require: numpy, pandas, networkx, scipy, openpyxl, geopandas, shapely.
+
+Data sources
+Input AADT and vehicle registration data are drawn from the 2024 Álava provincial 
+traffic map and the DGT municipal vehicle register. Raw source data is not 
+redistributed here due to licensing; see the thesis Annex A and B for full source 
+documentation.
+
+Citation
+If you use this code, please cite the thesis: 
+Z. Zarqa, "Analysis of the energy consumption of the transport in Gorbeialdea," M.S. thesis, Erasmus Mundus Joint Master's in Smart Cities and Communities (SMACCs), Universidad del País Vasco / Euskal Herriko Unibertsitatea (UPV/EHU), Bilbao, Spain, 2026.
+
+License
